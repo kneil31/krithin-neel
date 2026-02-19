@@ -235,86 +235,43 @@
       color: #7C6B9E;
     }
 
-    /* ── Video Cards (list style) ──────────────────── */
-    .video-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: var(--bg-card);
-      border-radius: var(--radius);
-      padding: 16px;
+    /* ── Video Cards ──────────────────────────────── */
+    .video-card {
+      position: relative;
       text-decoration: none;
-      color: var(--text);
-      box-shadow: var(--shadow);
-      transition: all 0.2s ease;
-    }
-
-    .card:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-1px);
-    }
-
-    .card.placeholder {
-      opacity: 0.6;
-      cursor: default;
-    }
-
-    .card-icon {
-      font-size: 32px;
-      flex-shrink: 0;
-      width: 48px;
-      height: 48px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      background-size: cover;
+      background-position: center;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--pink-soft);
-      border-radius: var(--radius-sm);
+      align-items: flex-end;
+      transition: transform 0.15s, box-shadow 0.2s;
     }
 
-    .card-body {
-      flex: 1;
-      min-width: 0;
+    .video-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.8) 100%);
     }
 
-    .card-title {
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.3;
+    .video-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
 
-    .card-location {
-      font-size: 13px;
-      color: var(--text-secondary);
-      font-weight: 600;
+    .video-card-content {
+      position: relative;
+      z-index: 1;
+      padding: 14px 16px;
+      width: 100%;
     }
 
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 4px;
+    .video-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
     }
 
-    .badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 50px;
-      background: var(--pink-soft);
-      color: #C25B52;
-    }
-
-    .play-icon {
-      color: var(--pink);
-      opacity: 0.7;
-      font-size: 18px;
-    }
 
     /* ── Footer ────────────────────────────────────── */
     .footer {
@@ -462,41 +419,53 @@
       </a>
 </div>
 <div class="section-label">Videos</div>
-<div class="video-list">
+<div class="cards-list video-grid">
 
-      <div class="card video-card placeholder">
-        <div class="card-icon">🎬</div>
-        <div class="card-body">
-          <div class="card-title">Krithin Meets Small World</div>
-          <span class="card-location">Teaser</span>
-          <div class="card-meta">
-            <span class="badge video-badge">Video coming soon</span>
-          </div>
+      <a href="https://www.youtube.com/watch?v=8awZJqW4boQ" target="_blank" rel="noopener" class="video-card" style="background-image:url('https://img.youtube.com/vi/8awZJqW4boQ/hqdefault.jpg')">
+        <div class="video-card-content">
+          <div class="tile-title">Krithin Meets Small World</div>
         </div>
-        <div class="card-arrow play-icon">▶</div>
-      </div>
-      <div class="card video-card placeholder">
-        <div class="card-icon">🎬</div>
-        <div class="card-body">
-          <div class="card-title">Krithin Full Video</div>
-          <span class="card-location">Fresh 48</span>
-          <div class="card-meta">
-            <span class="badge video-badge">Video coming soon</span>
-          </div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=GJCwUlpokXU" target="_blank" rel="noopener" class="video-card" style="background-image:url('https://img.youtube.com/vi/GJCwUlpokXU/hqdefault.jpg')">
+        <div class="video-card-content">
+          <div class="tile-title">Krithin Neel Unfiltered</div>
         </div>
-        <div class="card-arrow play-icon">▶</div>
-      </div>
-      <div class="card video-card placeholder">
-        <div class="card-icon">🎬</div>
-        <div class="card-body">
-          <div class="card-title">Krithin 11 Days</div>
-          <span class="card-location">Teaser</span>
-          <div class="card-meta">
-            <span class="badge video-badge">Video coming soon</span>
-          </div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=FATM1815Jnk" target="_blank" rel="noopener" class="video-card" style="background-image:url('https://img.youtube.com/vi/FATM1815Jnk/hqdefault.jpg')">
+        <div class="video-card-content">
+          <div class="tile-title">Krithin 11 Days Ceremony</div>
         </div>
-        <div class="card-arrow play-icon">▶</div>
-      </div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=6jWjQbBwAuM" target="_blank" rel="noopener" class="video-card" style="background-image:url('https://img.youtube.com/vi/6jWjQbBwAuM/hqdefault.jpg')">
+        <div class="video-card-content">
+          <div class="tile-title">Krithin Cradle Ceremony</div>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=W3yxm6FqWuo" target="_blank" rel="noopener" class="video-card" style="background-image:url('https://img.youtube.com/vi/W3yxm6FqWuo/hqdefault.jpg')">
+        <div class="video-card-content">
+          <div class="tile-title">Krithin Neel Back with Overloaded Cuteness</div>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=SGj7XQao77M" target="_blank" rel="noopener" class="video-card" style="background-image:url('https://img.youtube.com/vi/SGj7XQao77M/hqdefault.jpg')">
+        <div class="video-card-content">
+          <div class="tile-title">Krithin Yuku Ice Cream Ride</div>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=55YmZmdXFY4" target="_blank" rel="noopener" class="video-card" style="background-image:url('https://img.youtube.com/vi/55YmZmdXFY4/hqdefault.jpg')">
+        <div class="video-card-content">
+          <div class="tile-title">KAYU Fly High</div>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=bt8VzO7AAGM" target="_blank" rel="noopener" class="video-card" style="background-image:url('https://img.youtube.com/vi/bt8VzO7AAGM/hqdefault.jpg')">
+        <div class="video-card-content">
+          <div class="tile-title">Kids Meet Teaser</div>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=rQOVRxyDUCc" target="_blank" rel="noopener" class="video-card" style="background-image:url('https://img.youtube.com/vi/rQOVRxyDUCc/hqdefault.jpg')">
+        <div class="video-card-content">
+          <div class="tile-title">Parents Meet</div>
+        </div>
+      </a>
 </div>
 
     </div>
@@ -544,6 +513,15 @@
         </div>
       </a>
 </div>
+<div class="section-label">Videos</div>
+<div class="cards-list video-grid">
+
+      <a href="https://www.youtube.com/watch?v=Y3ZxYrE0Tmk" target="_blank" rel="noopener" class="video-card" style="background-image:url('https://img.youtube.com/vi/Y3ZxYrE0Tmk/hqdefault.jpg')">
+        <div class="video-card-content">
+          <div class="tile-title">Monika Baby Shower</div>
+        </div>
+      </a>
+</div>
 
     </div>
   
@@ -575,7 +553,7 @@
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.948 11.948 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.35 0-4.514-.81-6.228-2.164l-.435-.347-3.012 1.01 1.01-3.012-.348-.436A9.948 9.948 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
       WhatsApp
     </a>
-    <p style="margin-top: 12px; font-size: 11px; opacity: 0.5;">Generated 2026-02-19 09:43</p>
+    <p style="margin-top: 12px; font-size: 11px; opacity: 0.5;">Generated 2026-02-19 10:02</p>
   </div>
 
   <script>
