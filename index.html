@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Krithin Neel — Family Memories</title>
-  <meta name="description" content="Family memories — password protected">
+  <meta name="description" content="One stop for Krithin Neel's family memories — photo galleries and videos">
   <meta name="theme-color" content="#FFF8F0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -354,128 +354,6 @@
       text-decoration: none;
     }
 
-    /* ── Lock Screen ───────────────────────────────── */
-    .lock-screen {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: linear-gradient(180deg, #FFF0E5 0%, var(--bg) 40%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .lock-screen.hidden {
-      display: none;
-    }
-
-    .lock-icon {
-      font-size: 56px;
-      margin-bottom: 16px;
-    }
-
-    .lock-title {
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .lock-subtitle {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-      font-weight: 600;
-    }
-
-    .lock-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-      max-width: 300px;
-    }
-
-    .lock-input {
-      width: 100%;
-      padding: 14px 18px;
-      border: 2px solid var(--accent-soft);
-      border-radius: var(--radius);
-      font-family: 'Nunito', sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      text-align: center;
-      outline: none;
-      background: var(--bg-card);
-      color: var(--text);
-      transition: border-color 0.2s;
-    }
-
-    .lock-input:focus {
-      border-color: var(--accent);
-    }
-
-    .lock-input.error {
-      border-color: var(--pink);
-      animation: shake 0.4s ease;
-    }
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-8px); }
-      75% { transform: translateX(8px); }
-    }
-
-    .lock-btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: var(--radius);
-      background: var(--accent);
-      color: #fff;
-      font-family: 'Nunito', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-
-    .lock-btn:hover {
-      opacity: 0.85;
-    }
-
-    .lock-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    .lock-hint {
-      color: var(--text-secondary);
-      font-size: 12px;
-      margin-top: 10px;
-      opacity: 0.6;
-    }
-
-    .lock-lockout {
-      color: var(--pink);
-      font-size: 13px;
-      font-weight: 700;
-      margin-top: 12px;
-      display: none;
-    }
-
-    /* ── Unlock animation ─────────────────────────── */
-    @keyframes unlockReveal {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    #mainContent.revealed {
-      animation: unlockReveal 0.4s ease-out;
-    }
-
     /* ── Small mobile (single column tiles) ────────── */
     @media (max-width: 374px) {
       .cards-list {
@@ -509,119 +387,198 @@
   </style>
 </head>
 <body>
-  <!-- Lock Screen — content is AES-256-GCM encrypted, not just hidden -->
-  <div id="lockScreen" class="lock-screen">
-    <div class="lock-icon">🔒</div>
-    <div class="lock-title">Family Memories</div>
-    <div class="lock-subtitle">Enter password to view</div>
-    <form class="lock-form" onsubmit="return unlock(event)">
-      <input type="password" id="passwordInput" class="lock-input" placeholder="Password" autocomplete="off" autofocus>
-      <button type="submit" id="unlockBtn" class="lock-btn">Unlock</button>
-    </form>
-    <div class="lock-hint">Hint: shared with family</div>
-    <div class="lock-lockout" id="lockoutMsg"></div>
+  <div class="header">
+    <div class="header-icon">👶</div>
+    <h1>Krithin Neel</h1>
+    <p class="subtitle">One stop for family memories</p>
   </div>
 
-  <!-- Encrypted content container — empty until decrypted -->
-  <div id="mainContent"></div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('krithin')">Krithin</button>
+    <button class="tab-btn" onclick="switchTab('monika')">Monika</button>
+    <button class="tab-btn" onclick="switchTab('family')">Family</button>
+  </div>
 
-  <!-- Encrypted payload (AES-256-GCM, PBKDF2 key derivation) -->
-  <script id="encryptedData" type="application/json">
-  {"s":"vsV7S6gvhzM0HV4kVoRLLg==","i":"1o4T0uIs/++n3Mfm","c":"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"}
-  </script>
+  
+    <div id="tab-krithin" class="tab-content">
+      <div class="section-label">Photo Galleries</div>
+<div class="cards-list">
+
+      <a href="https://www.rsquarestudios.com/2024/Krithin-Neel/n-LD72KK" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-FmnMtpJ/0/L9pkjpG683rXk5LfdzDkrstpVwt7wgfc4hPSqL5vn/L/i-FmnMtpJ-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Fresh 48</div>
+          <div class="tile-meta">April 10, 2024 &middot; Medical City</div>
+          <span class="tile-badge">120 images</span>
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2024/Krithin-Cradle-Ceremony/n-nKgrKN" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-hHx2M78/0/LjM7qDTCf85Tc9gmSt6HrtphKkS2Lr88DgRfc6Btw/L/i-hHx2M78-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Cradle Ceremony</div>
+          <div class="tile-meta">April 30, 2024 &middot; Irving</div>
+          <span class="tile-badge">338 images</span>
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2025/KAYU-Sankranthi-2025/n-83VJzP" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-WbZc4M9/0/MRrZxzP3CMCScBkxzDvzr3JBn67G6vK3QMBLH5H3k/L/i-WbZc4M9-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Sankranthi 2025</div>
+          <div class="tile-meta">January 13, 2025 &middot; Corinth</div>
+          <span class="tile-badge">159 images</span>
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2025/2025-02-12---Krithin-Temple---Pittsburgh/n-Sstqs8" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-FkkzZQx/0/NHRgbcrTsZZXjvNGLzCp6rmJvQZ3vWd6Tngbtkr8M/L/i-FkkzZQx-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Temple Visit</div>
+          <div class="tile-meta">February 12, 2025 &middot; Pittsburgh</div>
+          <span class="tile-badge">358 images</span>
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2025/2025-04-08-Krithin-Cake-Smash-Home/n-GfWtSm" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-8prNQ75/0/KSDMX73H4jdxxM7HC8xxkR9h3sb6HttMHdJQsppWT/L/i-8prNQ75-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Cake Smash</div>
+          <div class="tile-meta">April 8, 2025 &middot; Home</div>
+          <span class="tile-badge">173 images</span>
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2025/Krithiin-Adugulu-Home/n-fZQgS5" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-ZBcPMKN/0/LBXPb4ZxSWjhD7rH9Ng8MHcFqwLKFkxLn27XzpZwK/L/i-ZBcPMKN-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Adugulu</div>
+          <div class="tile-meta">June 1, 2025 &middot; Home</div>
+          <span class="tile-badge">16 images</span>
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2025/KAYU-Halloween/n-K9g7f3" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-Gkhvcfm/0/KxkpjrmFMt9cGXfjTTmXvcgB388VNggqBLpfPkgnk/L/i-Gkhvcfm-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Halloween</div>
+          <div class="tile-meta">November 2, 2025 &middot; Dallas</div>
+          <span class="tile-badge">165 images</span>
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2026/Krithin-New-year-2026/n-rj9Mvw" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-KLPGwqN/0/NSDZHbGLBcJttfnHNSPXxX3BSHDk9rPcCR8z9Rvks/L/i-KLPGwqN-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">New Year 2026</div>
+          <div class="tile-meta">January 2026</div>
+          <span class="tile-badge">14 images</span>
+        </div>
+      </a>
+</div>
+<div class="section-label">Videos</div>
+<div class="video-list">
+
+      <div class="card video-card placeholder">
+        <div class="card-icon">🎬</div>
+        <div class="card-body">
+          <div class="card-title">Krithin Meets Small World</div>
+          <span class="card-location">Teaser</span>
+          <div class="card-meta">
+            <span class="badge video-badge">Video coming soon</span>
+          </div>
+        </div>
+        <div class="card-arrow play-icon">▶</div>
+      </div>
+      <div class="card video-card placeholder">
+        <div class="card-icon">🎬</div>
+        <div class="card-body">
+          <div class="card-title">Krithin Full Video</div>
+          <span class="card-location">Fresh 48</span>
+          <div class="card-meta">
+            <span class="badge video-badge">Video coming soon</span>
+          </div>
+        </div>
+        <div class="card-arrow play-icon">▶</div>
+      </div>
+      <div class="card video-card placeholder">
+        <div class="card-icon">🎬</div>
+        <div class="card-body">
+          <div class="card-title">Krithin 11 Days</div>
+          <span class="card-location">Teaser</span>
+          <div class="card-meta">
+            <span class="badge video-badge">Video coming soon</span>
+          </div>
+        </div>
+        <div class="card-arrow play-icon">▶</div>
+      </div>
+</div>
+
+    </div>
+  
+    <div id="tab-monika" class="tab-content">
+      <div class="section-label">Photo Galleries</div>
+<div class="cards-list">
+
+      <a href="https://www.rsquarestudios.com/2024/Monika-Babyshower/n-r78HKK" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-DdC5cKk/0/KmjqvT72XhJWKDdwSFsrqkBxpWrDqj2NsXGHrGV9F/L/i-DdC5cKk-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Baby Shower</div>
+          <div class="tile-meta">March 17, 2024 &middot; Irving</div>
+          <span class="tile-badge">308 images</span>
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2024/Monika-Maternity/n-txJ8H6" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-7mKktK7/0/LDC68zVscKXKdwqKCqddmsxtqLHP5KChv9HmLXBFd/L/i-7mKktK7-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Maternity 2024</div>
+          <div class="tile-meta">April 2, 2024 &middot; Texas</div>
+          <span class="tile-badge">154 images</span>
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2023/MONIKA-Birthday-23-Dallas" target="_blank" rel="noopener" class="tile tile-no-image">
+        <div class="tile-icon">🎈</div>
+        <div class="tile-content">
+          <div class="tile-title">Birthday 2023</div>
+          <div class="tile-meta">June 30, 2023 &middot; Dallas</div>
+          
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2023/Monika-and-girls-shoot-Mandlay" target="_blank" rel="noopener" class="tile tile-no-image">
+        <div class="tile-icon">👯</div>
+        <div class="tile-content">
+          <div class="tile-title">Girls Shoot 2023</div>
+          <div class="tile-meta">November 26, 2023 &middot; Mandalay</div>
+          
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2023/Monika---Maternity---Mandlay" target="_blank" rel="noopener" class="tile tile-no-image">
+        <div class="tile-icon">🌸</div>
+        <div class="tile-content">
+          <div class="tile-title">Maternity 2023</div>
+          <div class="tile-meta">December 10, 2023 &middot; Mandalay</div>
+          
+        </div>
+      </a>
+</div>
+
+    </div>
+  
+    <div id="tab-family" class="tab-content">
+      <div class="section-label">Photo Galleries</div>
+<div class="cards-list">
+
+      <a href="https://www.rsquarestudios.com/2024/2024-12-29---Monika-Neel-HW---Corinth/n-cDsRTB" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-X9JmpJZ/0/LNxbT8SXj6DKKDbRPsdpb9RDn2MXMDsSm6zfkQTJR/L/i-X9JmpJZ-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Moniel Housewarming</div>
+          <div class="tile-meta">December 29, 2024 &middot; Corinth</div>
+          <span class="tile-badge">412 images</span>
+        </div>
+      </a>
+      <a href="https://www.rsquarestudios.com/2025/KAYU-Sankranthi-2025/n-83VJzP" target="_blank" rel="noopener" class="tile" style="background-image:url('https://photos.smugmug.com/photos/i-WbZc4M9/0/MRrZxzP3CMCScBkxzDvzr3JBn67G6vK3QMBLH5H3k/L/i-WbZc4M9-L.jpg')">
+        <div class="tile-content">
+          <div class="tile-title">Sankranthi 2025</div>
+          <div class="tile-meta">January 13, 2025 &middot; Corinth</div>
+          <span class="tile-badge">159 images</span>
+        </div>
+      </a>
+</div>
+
+    </div>
+
+  <div class="footer">
+    <p>Captured with love by <a href="https://kneil31.github.io/rsquare-studios/" target="_blank">Rsquare Studios</a></p>
+    <a href="https://wa.me/14697095978" class="whatsapp-link" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.948 11.948 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.35 0-4.514-.81-6.228-2.164l-.435-.347-3.012 1.01 1.01-3.012-.348-.436A9.948 9.948 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+      WhatsApp
+    </a>
+    <p style="margin-top: 12px; font-size: 11px; opacity: 0.5;">Generated 2026-02-19 09:43</p>
+  </div>
 
   <script>
-    function b64ToBytes(b64) {
-      return Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-    }
-
-    async function deriveKey(password, salt) {
-      const enc = new TextEncoder();
-      const keyMaterial = await crypto.subtle.importKey(
-        'raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']
-      );
-      return crypto.subtle.deriveKey(
-        { name: 'PBKDF2', salt: salt, iterations: 100000, hash: 'SHA-256' },
-        keyMaterial,
-        { name: 'AES-GCM', length: 256 },
-        false,
-        ['decrypt']
-      );
-    }
-
-    async function decryptContent(password) {
-      const payload = JSON.parse(document.getElementById('encryptedData').textContent);
-      const salt = b64ToBytes(payload.s);
-      const iv = b64ToBytes(payload.i);
-      const ct = b64ToBytes(payload.c);
-      const key = await deriveKey(password, salt);
-      const plainBuf = await crypto.subtle.decrypt(
-        { name: 'AES-GCM', iv: iv }, key, ct
-      );
-      return new TextDecoder().decode(plainBuf);
-    }
-
-    let _failCount = 0;
-    let _lockedOut = false;
-
-    async function unlock(e) {
-      e.preventDefault();
-      if (_lockedOut) return;
-      const input = document.getElementById('passwordInput');
-      const btn = document.getElementById('unlockBtn');
-      if (!input.value) return;
-
-      btn.disabled = true;
-      btn.textContent = 'Checking...';
-
-      try {
-        const html = await decryptContent(input.value);
-        const main = document.getElementById('mainContent');
-        main.innerHTML = html;
-        main.classList.add('revealed');
-        document.getElementById('lockScreen').classList.add('hidden');
-        _failCount = 0;
-        const firstTab = document.getElementById('tab-krithin');
-        if (firstTab) firstTab.classList.add('active');
-      } catch (_) {
-        _failCount++;
-        btn.disabled = false;
-        btn.textContent = 'Unlock';
-        input.classList.add('error');
-        input.value = '';
-        setTimeout(() => input.classList.remove('error'), 500);
-        if (_failCount >= 3) {
-          startLockout();
-        }
-      }
-    }
-
-    function startLockout() {
-      _lockedOut = true;
-      const btn = document.getElementById('unlockBtn');
-      const input = document.getElementById('passwordInput');
-      const lockoutEl = document.getElementById('lockoutMsg');
-      btn.disabled = true;
-      input.disabled = true;
-      lockoutEl.style.display = 'block';
-      let remaining = 15;
-      lockoutEl.textContent = `Too many attempts. Try again in ${remaining}s`;
-      const timer = setInterval(() => {
-        remaining--;
-        if (remaining <= 0) {
-          clearInterval(timer);
-          _lockedOut = false;
-          _failCount = 0;
-          btn.disabled = false;
-          input.disabled = false;
-          lockoutEl.style.display = 'none';
-          input.focus();
-        } else {
-          lockoutEl.textContent = `Too many attempts. Try again in ${remaining}s`;
-        }
-      }, 1000);
-    }
-
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -629,6 +586,7 @@
       event.currentTarget.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    document.getElementById('tab-krithin').classList.add('active');
   </script>
 </body>
 </html>
