@@ -4,25 +4,28 @@ Subproject of rsquare-studios-dashboard. Family memories page hosted on GitHub P
 
 **Last Updated:** 2026-02-25
 
+## IMPORTANT: No Secrets in This File
+
+**This file is on a PUBLIC repo.** Never put passwords, phone numbers, emails, SmugMug node/image IDs, YouTube video IDs, file paths, or any personal information here. All secrets and identifiers live in gitignored local files (`.secret`, `cover_images.json`) or in the generator source.
+
 ## Overview
 
 - **Live URL:** https://krithin.rsquarestudios.com/ (custom domain, CNAME → kneil31.github.io)
-- **Legacy URL:** https://kneil31.github.io/krithin-neel/
 - **GitHub Repo:** kneil31/krithin-neel (public)
 - **Generator:** `generate_krithin_page.py` → `output/index.html`
 - **Password:** Read from `KRITHIN_PAGE_PASSWORD` env var or `.secret` file (not hardcoded)
-- **Encryption:** AES-256-GCM, 400k PBKDF2 iterations, data-driven DOM (no innerHTML)
+- **Encryption:** AES-256-GCM, data-driven DOM (no innerHTML)
 
 ## Design
 
 - Warm pastel baby/family theme (cream #FFF8F0 bg, peach #E8A87C accent)
 - System font stack (no Google Fonts — zero 3rd-party calls)
-- 3 tabs: Krithin | Reels | Monika (Family merged into Monika tab). OTP users only see Krithin + Reels (Monika tab hidden)
+- 3 tabs: Krithin | Reels | Monika. OTP users only see Krithin + Reels (Monika tab hidden)
 - Mobile-first (shared via WhatsApp)
-- WhatsApp: ***REMOVED***
+- WhatsApp number stored in encrypted blob (loaded after decryption)
 - Gallery tiles: 3/4 aspect ratio, 2-column mobile, 3-column desktop
-- Video tiles: 16/9 aspect ratio, always 2-column grid. Supports optional `"cover"` field for SmugMug photos
-- Reel tiles: 9/16 portrait aspect ratio, 3-column grid, `<img>` tags. Supports optional `"cover"` field for SmugMug photos (much better quality than YouTube thumbs)
+- Video tiles: 16/9 aspect ratio, always 2-column grid. Supports optional `"cover"` field
+- Reel tiles: 9/16 portrait aspect ratio, 3-column grid, `<img>` tags. Supports optional `"cover"` field
 - Gallery tiles: Support optional `"cover"` field to override `cover_images.json` highlight images
 
 ## Data
@@ -31,38 +34,29 @@ Subproject of rsquare-studios-dashboard. Family memories page hosted on GitHub P
 - Cover images from `cover_images.json` (SmugMug highlight images, medium/large/xlarge)
 - Gallery URLs, video URLs, and metadata hardcoded in generator
 - Custom covers: galleries, videos, and reels all support optional `"cover"` field (SmugMug XLarge URLs)
-- Upload script: `upload_moniel_wedding.py` (bulk SmugMug uploader for wedding photos from MONIEL SSD)
 
 ## Content
 
-| Tab | Galleries |
-|-----|-----------|
-| Krithin | Fresh 48, Cradle Ceremony, Sankranthi 2025, Temple Visit, Cake Smash, Adugulu, Halloween, New Year 2026 |
-| Monika | Baby Shower, Maternity 2024, Girls Shoot 2023, Wedding: Moniel Wedding - Bride, Moniel Wedding - Engagement, Ramu Pelli Koduku, Monika Pelli Koothuru, Moniel Wedding - Candid + Family: Moniel Housewarming |
+Galleries, videos, and reels are organized into 3 tabs. See `generate_krithin_page.py` for the full list of galleries, videos, and SmugMug node IDs.
 
-**Videos:** 6 in Krithin tab (incl. KAYU Fly High), 3 in Monika tab (all with YouTube URLs and custom SmugMug covers)
-**Reels:** 13 in dedicated Reels tab (all with SmugMug cover photos from Krithin-2026-dump album)
-**Wedding galleries (Monika tab):** 5 galleries with custom SmugMug covers — Bride (bJQgqP), Engagement (tZ3gLX), Ramu Pelli Koduku (Qd63X3), Monika Pelli Koothuru (NJNF7h), Candid (rb8Gvh). Traditional (3j328x) uploaded but not yet added.
+- Video/reel/gallery tiles all support optional `"cover": "SmugMug URL"` field — use XLarge size for good quality
 
 ## Security
 
-- **AES-256-GCM** encryption at build time (Python `cryptography` package)
-- **PBKDF2** key derivation (400k iterations, SHA-256)
-- **Password:** From `KRITHIN_PAGE_PASSWORD` env var or `.secret` file (never hardcoded)
-- **Data-driven DOM:** Encrypted payload contains JSON data objects, JS builds DOM with `createElement`/`textContent` (no `innerHTML`)
+- **Encryption:** AES-256-GCM at build time, PBKDF2 key derivation
+- **Password:** From env var or `.secret` file (never hardcoded)
+- **Data-driven DOM:** JS builds DOM with `createElement`/`textContent` (no `innerHTML`)
 - **URL allowlist:** JS validates all URLs against known hosts before setting `href`/`src`
-- **Referrer protection:** `<meta name="referrer" content="no-referrer">` + `rel="noreferrer noopener"` on all links
-- **No 3rd-party calls:** System fonts (no Google Fonts), no external JS/CSS
+- **Referrer protection:** `<meta name="referrer" content="no-referrer">` + `rel="noreferrer noopener"`
+- **No 3rd-party calls:** System fonts, no external JS/CSS
 - **Privacy:** `<meta name="robots" content="noindex, nofollow, noarchive">`
-- **Content Security Policy:** Strict CSP via `<meta>` tag with nonce-based `script-src` (nonce regenerated each build via `os.urandom(16)`)
-- **No inline onclick:** All event handlers use `addEventListener` (required for nonce-only CSP)
-- **CSP directives:** `default-src 'none'; script-src 'nonce-...'; style-src 'unsafe-inline'; img-src` SmugMug + YouTube domains; `connect-src 'none'`
+- **CSP:** Strict Content-Security-Policy via `<meta>` tag with nonce-based `script-src`
+- **No inline onclick:** All event handlers use `addEventListener`
 - **Permissions-Policy:** Camera, mic, geolocation disabled
-- **3-strike lockout** with 15s cooldown on wrong password
-- **48h OTP:** Dual-blob encryption — master password always works + 4-word OTP expires after 48h. OTP blob excludes Monika data entirely (not just hidden — data is absent from the encrypted payload)
-- **Session persistence:** 30-min sessionStorage auto-unlock (survives SmugMug visits)
-- **Schema versioned** encrypted payload (`"v": 1`)
-- **UX:** Show/hide password toggle, logout button, "don't share" reminder
+- **3-strike lockout** with cooldown on wrong password
+- **OTP:** Dual-blob encryption — master password always works + OTP expires after 48h. OTP blob excludes some content entirely.
+- **Session persistence:** 30-min auto-unlock (survives external site visits)
+- **Schema versioned** encrypted payload
 
 ## Workflow
 
@@ -70,7 +64,6 @@ Subproject of rsquare-studios-dashboard. Family memories page hosted on GitHub P
 # Regenerate (password from .secret file or env var)
 cd krithin-neel
 python3 generate_krithin_page.py
-# Or: KRITHIN_PAGE_PASSWORD="..." python3 generate_krithin_page.py
 
 # Deploy to GitHub Pages
 cp output/index.html /tmp/krithin-neel/
@@ -84,17 +77,7 @@ python3 generate_otp.py --no-slack   # Regenerate + deploy (no Slack)
 
 ## Notes
 
-- "Moniel Housewarming" not "Half Saree" (album name: Monika-Neel HW)
-- Halloween album is "KAYU Halloween" in album_stats (node_id: K9g7f3)
-- Video/reel/gallery tiles all support optional `"cover": "SmugMug URL"` field — use XLarge size for good quality
-- Reel cover source album: Krithin-2026-dump (all 13 reels have custom covers)
-- Gallery covers: Fresh 48 (Cg8LkMz), Cradle (zbjFvnD), Sankranthi (ZqK2JFp), Temple Visit (z5F449L), Cake Smash (qGFd3mp), Girls Shoot (NQzhzqV), Moniel HW (2vgmVNq), Baby Shower (bfcjZSM)
-- Removed: Birthday 2023, Maternity 2023 (SmugMug 404), Sankranthi 2025 from Family (duplicate)
-- KAYU Fly High moved from Reels to Krithin Videos; Kids Meet Teaser removed
-- Skipped video: `dkpibn_N4EM` (Cradle Ceremony review only, may add later)
-- **Moniel Wedding upload:** `upload_moniel_wedding.py` — bulk uploaded 6,318 JPGs from `/Volumes/MONIEL SSD/` to SmugMug (6 albums under 2022 folder). Filters macOS `._` resource fork files. Uses `AutoRename: True` and `SortMethod: Name`.
-- **Telugu gallery names:** "Ramu Pelli Koduku" (groom's side) and "Monika Pelli Koothuru" (bride's side) — not English translations
-- **Wedding gallery covers:** All 5 added galleries have custom SmugMug XLarge cover photos
-- Moniel Wedding - Traditional (3j328x) uploaded to SmugMug but not yet added to krithin page
-- **OG image:** Hosted on SmugMug (image key Cg8LkMz, XLarge). Scrubbed `og-image.jpg` from repo history via `filter-repo`.
-- **generate_otp.py:** Wrapper script — regenerates page (new OTP), copies to `/tmp/krithin-neel/`, pushes, sends OTP to Slack. Slack message includes "(Monika tab hidden)" context.
+- Album names, node IDs, image keys, and cover mappings are in `generate_krithin_page.py` and `cover_images.json` — not documented here (public repo)
+- Upload script (`upload_moniel_wedding.py`) filters macOS `._` resource fork files, uses `AutoRename: True` and `SortMethod: Name`
+- OG image hosted on SmugMug (XLarge size). Local `og-image.jpg` was scrubbed from repo history via `filter-repo`.
+- `generate_otp.py` — wrapper script: regenerates page (new OTP), copies to deploy dir, pushes, sends OTP to Slack
